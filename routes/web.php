@@ -11,6 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get ( '/', function () {
+	return view ( 'welcome' );
+} );
+
+Route::get ( '/Register', function () {
+	return view ( 'showRegister' );
+} );
+
+Route::get ( '/Login', function () {
+	return view ( 'showLogin' );
+} );
+
+Route::get ( '/Calendar', function () {
+	return view ( 'showCalendar' );
+} );
+
+Route::get ( '/Events', function () {
+	return view ( 'showEvents' );
+} );
+
+Route::get ( '/EventDetailed', function () {
+	return view ( 'showEventDetailed' );
+} );
