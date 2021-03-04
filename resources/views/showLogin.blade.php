@@ -19,7 +19,7 @@
                     <h2 class="text-info font-weight-light mb-5">Cornerstone Church Login</h2>
                     <form action="dologin" method="POST">
 						<input type="hidden" name="_token" value=" <?php echo csrf_token()?>" />
-                        <div class="form-group"><label class="text-secondary">Email</label><input class="form-control" name="username" type="text" required="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}$" inputmode="email"></div>
+                        <div class="form-group"><label class="text-secondary">Email</label><input class="form-control" name="username" type="text" required="" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,30}$" inputmode="email"></div>
                         <div class="form-group"><label class="text-secondary">Password</label><input class="form-control" name="password" type="password" required=""></div><button class="btn btn-info mt-2" type="submit">Log In</button>
                     </form>
                     <p class="mt-3 mb-0"><a class="text-info small" href="Register">Click here to register</a></p>
