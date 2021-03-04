@@ -12,8 +12,10 @@
 */
 
 Route::get ( '/', function () {
-	return view ( 'welcome' );
+	return view ( 'showLogin' );
 } );
+
+Route::post('dologin', 'UserController@login');
 
 Route::get ( '/Register', function () {
 	return view ( 'showRegister' );
