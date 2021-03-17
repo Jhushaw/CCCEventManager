@@ -15,8 +15,6 @@ Route::get ( '/', function () {
 	return view ( 'showLogin' );
 } );
 
-Route::post('dologin', 'UserController@login');
-
 Route::get ( '/Register', function () {
 	return view ( 'showRegister' );
 } );
@@ -36,3 +34,7 @@ Route::get ( '/Events', function () {
 Route::get ( '/EventDetailed', function () {
 	return view ( 'showEventDetailed' );
 } );
+
+//post route
+Route::post('dologin', 'LoginController@userLogin');
+Route::post('doregister', 'RegisterController@userRegister');
