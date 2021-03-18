@@ -14,27 +14,29 @@
 Route::get ( '/', function () {
 	return view ( 'showLogin' );
 } );
-
 Route::get ( '/Register', function () {
 	return view ( 'showRegister' );
 } );
-
 Route::get ( '/Login', function () {
 	return view ( 'showLogin' );
 } );
-
 Route::get ( '/Calendar', function () {
 	return view ( 'showCalendar' );
 } );
-
 Route::get ( '/Events', function () {
 	return view ( 'showEvents' );
 } );
-
+Route::get ( '/AddEvent', function () {
+	return view ( 'addEvent' );
+} );
 Route::get ( '/EventDetailed', function () {
 	return view ( 'showEventDetailed' );
 } );
 
+//Route to logout and clear the current user's session
+Route::get('/Logout', 'LoginController@logoutUser');
+
 //post route
 Route::post('dologin', 'LoginController@userLogin');
+Route::post('doregister', 'RegisterController@userRegister');
 Route::post('doregister', 'RegisterController@userRegister');

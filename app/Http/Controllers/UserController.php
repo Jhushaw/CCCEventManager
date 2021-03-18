@@ -47,7 +47,6 @@ class UserController extends Controller
             //get fields from view
             $userN = $request->input('username');
             $uPass = $request->input('password');
-            //$userN = $userN->strtolower();
             
             if ($userN == "jacob@gmail.com" && $uPass == "hushaw"){
                 return view('showEvents');

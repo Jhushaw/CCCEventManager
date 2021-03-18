@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Exception;
 use App\Http\BusinessService\CredentialsService;
@@ -38,6 +39,12 @@ class LoginController extends Controller{
 			MyLogger::info("Exceptions", array("Message" =>$e->getMessage()));
 			throw $e;
 		}
+	}
+	
+	//Clears the session so the user logs out
+	public function logoutUser(){
+		Session::flush();
+		return view('showLogin');
 	}
 	
 	private function validateForm(Request $request){

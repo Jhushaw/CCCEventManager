@@ -18,11 +18,7 @@
                 <div class="form-group"><input class="form-control" type="tel" name="phonenum" placeholder="Phone Number"></div>
                 <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email"></div>         
                 <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password"></div>
-<<<<<<< Updated upstream
-                <div class="form-group"><input class="form-control" type="password" name="password-repeat" placeholder="Confirm Password"></div>
-=======
                 <!-- <div class="form-group"><input class="form-control" type="password" name="password-repeat" placeholder="Password (repeat)"></div> -->
->>>>>>> Stashed changes
                 <div class="form-group">
                     <div class="form-check"><label class="form-check-label"></label></div>
                 </div>

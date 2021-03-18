@@ -16,12 +16,12 @@ width: 100%;
 			<a href="#"><i class="icon ion-social-facebook"></i></a>
 		</div>
 		<ul class="list-inline">
-			<li class="list-inline-item"><a href="#">Home</a></li>
+			<li class="list-inline-item"><a href="Events">Home</a></li>
 			<li class="list-inline-item"><a href="#">Services</a></li>
 			<li class="list-inline-item"><a href="#">About</a></li>
 			<li class="list-inline-item"><a href="#">Terms</a></li>
 			<li class="list-inline-item"><a href="#">Privacy Policy</a></li>
 		</ul>
-		<p class="copyright">Company Name © 2021</p>
+		<p class="copyright">Cornerstone Church @ 2021</p>
 	</footer>
 </div>
