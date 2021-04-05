@@ -36,10 +36,10 @@ class RegisterController extends Controller{
 			if($status){
 				MyLogger::info("Exiting RegisterController.userRegister with passed");
 				$data = ['model' => $user];
-				return view('registerPassed')->with($data);
+				return view('showLogin')->with('msg', 'You have successfully registered!.');;
 			}else{
 				MyLogger::info("Exiting RegisterController.userRegister with failed");
-				return view('registerFailed');
+				return view('showRegister')->with('msg', 'Registration Failed.');;
 			}
 		}catch(ValidationException $e1){
 			throw $e1;
