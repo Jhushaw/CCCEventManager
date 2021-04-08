@@ -26,6 +26,7 @@ class LoginController extends Controller{
 			
 			$service = new CredentialsService();
 			$status = $service->login($user);
+		    
 			
 			if($status){
 				MyLogger::info("Exiting LoginController.userLogin with passed");

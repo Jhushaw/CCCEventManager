@@ -45,6 +45,7 @@ class CredentialsDAO{
         		$fetchedUser = new User($row["ID"], $row['USERNAME'], $row['PASSWORD'], $row['FIRSTNAME'], $row['LASTNAME'], $row['EMAIL'], $row['PHONENUM']);
         		//put user in session
         		Session::put('User',$fetchedUser);
+        		Session::put('Admin', $row["ADMIN"]);
         		return true;  		
         	}else{
         		MyLogger::info("Exit CredentialsDAO.findUser() with false");
