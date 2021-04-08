@@ -3,6 +3,7 @@
 @section('head','Add Events')
 
 @section('content')
+@if (Session::has('User') && Session::get('Admin') == 1)
 <!-- action will point to the route -->   
 <div class="blog-home2 py-5">
   <div class="container">
@@ -40,4 +41,9 @@
 </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    
+    @else
+    <script>window.location = "Login";</script>
+
+@endif
 @endsection
