@@ -2,6 +2,7 @@
 namespace App\Http\Model;
 //user model class outlines all event data
 class Event {
+    private $id;
 	private $title;
 	private $description;
 	private $date;
@@ -16,6 +17,14 @@ class Event {
 	}	
 	
 	//getter methods for all user variables
+	
+	public function getID(){
+	    return $this->id;
+	}
+	
+	public function setID($id){
+	    $this->id = $id;	    
+	}
 	public function getTitle() {
 		return $this->title;
 	}

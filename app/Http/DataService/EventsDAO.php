@@ -117,4 +117,52 @@ class EventsDAO{
 	        throw new DatabaseException("Database Exception " . $e->getMessage(), 0, $e);
 	    }
 	}
+	
+	public function deleteEvent($id)
+	{
+	    MyLogger::info("Entering EventsDAO.deleteEvents()");
+	    try {
+	        // delete song based on id
+	        $stmt = $this->conn->query("DELETE FROM `events` WHERE `ID` = $id LIMIT 1");
+	        $result = $stmt->execute();
+	        
+	        MyLogger::info("event successfully deleted, exitng EventsDAO.deleteEvents()");
+	        // return bool if row was deleted
+	        return $result;
+	    } catch (PDOException $e2) {
+	        throw $e2;
+	    }
+	}
+	
+	public function editEvent(Event $event){
+	    MyLogger::info("Entering updatePlaylist() in the Playlist data service");
+	    try {
+	        // update playlist based on param playlist
+	        $stmt = $this->conn->prepare("UPDATE events SET URL = :url, TITLE = :title, DATE = :date, DESCRIPTION = :description WHERE ID = :id");
+	        $id = $event->getID();
+	        $url = $event->getUrl();
+	        $title = $event->getTitle();
+	        $date = $event->getDate();
+	        $description = $event->getDescription();
+	        
+	        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+	        $stmt->bindParam(':url', $url);
+	        $stmt->bindParam(':title', $title);
+	        $stmt->bindParam(':date', $date);
+	        $stmt->bindParam(':description', $description);
+	        
+	        $stmt->execute();
+	        // check rows affected
+	        $result = $stmt->rowCount();
+	        if ($result == 1) {
+	            MyLogger::info("Event successfully updated, exiting, EventDAO.editEvent()");
+	            return true;
+	        } else {
+	            MyLogger::warning("Event not successfully updated, exiting, EventDAO.editEvent()");
+	            return false;
+	        }
+	    } catch (PDOException $e2) {
+	        throw $e2;
+	    }
+	}
 }
