@@ -31,8 +31,8 @@ class EventsController extends Controller{
 			
 			if($status){
 				MyLogger::info("Exiting EventsController.createEvent with passed");
-				$data = ['event' => $event];
-				return view('showEvents')->with($data);
+				$data = $service->getAllEvents();
+				return view('showEvents')->with('events', $data);
 			}else{
 				MyLogger::info("Exiting EventsController.createEvent with failed");
 				return view('createEventFailed');
@@ -65,5 +65,27 @@ class EventsController extends Controller{
 			MyLogger::info("Exceptions", array("Message" =>$e->getMessage()));
 			throw $e;
 		}
+	}
+	
+	public function showAllEvents() {
+	    try{
+	        $service = new EventsService();
+	        // status should hold all events
+	        $status = $service->getAllEvents();
+	        
+	        if($status){
+	            MyLogger::info("Exiting EventsController.showAllEvents with passed");
+	            // should be an event in the session variable for event
+	            return view('showEvents')->with('events', $status);
+	        }else{
+	            MyLogger::info("Exiting LoginController.userLogin with failed");
+	            return view('showEvents')->with('events', array());
+	        }
+	    }catch(ValidationException $e1){
+	        throw $e1;
+	    }catch(Exception $e){
+	        MyLogger::info("Exceptions", array("Message" =>$e->getMessage()));
+	        throw $e;
+	    }
 	}
 }

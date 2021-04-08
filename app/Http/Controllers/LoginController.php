@@ -8,6 +8,7 @@ use Exception;
 use App\Http\BusinessService\CredentialsService;
 use App\Http\Model\User;
 use App\Http\Utillity\MyLogger;
+use App\Http\BusinessService\EventsService;
 
 class LoginController extends Controller{
 	
@@ -28,7 +29,18 @@ class LoginController extends Controller{
 			
 			if($status){
 				MyLogger::info("Exiting LoginController.userLogin with passed");
-				return view('showEvents');
+				$eventService = new EventsService();
+				// status should hold all events
+				$eventStatus = $eventService->getAllEvents();
+				
+				if($eventStatus){
+				    MyLogger::info("Exiting LoginController.userLogin with events");
+				    // should be an event in the session variable for event
+				    return view('showEvents')->with('events', $eventStatus);
+				}else{
+				    MyLogger::info("Exiting LoginController.userLogin with no events");
+				    return view('showEvents')->with('events', array());
+				}
 			}else{
 				MyLogger::info("Exiting LoginController.userLogin with failed");
 				return view('loginFailed');

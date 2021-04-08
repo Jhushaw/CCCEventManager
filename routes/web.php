@@ -23,9 +23,8 @@ Route::get ( '/Login', function () {
 Route::get ( '/Calendar', function () {
 	return view ( 'showCalendar' );
 } );
-Route::get ( '/Events', function () {
-	return view ( 'showEvents' );
-} );
+Route::get ( '/Events', 'EventsController@showAllEvents' );
+
 Route::get ( '/AddEvent', function () {
 	return view ( 'addEvent' );
 } );

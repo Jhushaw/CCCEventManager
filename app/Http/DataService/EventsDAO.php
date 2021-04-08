@@ -90,4 +90,31 @@ class EventsDAO{
 			throw new DatabaseException("Database Exception " . $e->getMessage(), 0, $e);
 		}
 	}
+	
+	public function getAllEvents() {
+	    MyLogger::info("Entering EventsDAO.getAllEvents()");
+	    
+	    try{
+	        // only select events after todays date, order by date ascending
+	        $stmt = $this->conn->prepare("SELECT * FROM events WHERE DATE > '" . date("Y-m-d") . "' ORDER BY DATE");
+	        $stmt->execute();
+	        
+	        //See if events returned and return true if found else return false if not found
+	        //Bad practice: this is a business rules in our DAO
+	        if ($stmt->rowCount() > 0){
+	            MyLogger::info("Exit EventsDAO.getAllEvents() with events found");
+	            // get all events as associative arrays
+	            $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	            return $events;
+	        }else{
+	            MyLogger::info("Exit EventsDAO.getAllEvents() with false");
+	            return false;
+	        }
+	    }catch (PDOException $e){
+	        //BEST practice: catch all exceptions (do not swallow exceptions),
+	        //log the exception, do not throw technology specific exceptions, and throw a cusom exception
+	        MyLogger::error("Exception: ", array("message" => $e->getMessage()));
+	        throw new DatabaseException("Database Exception " . $e->getMessage(), 0, $e);
+	    }
+	}
 }
