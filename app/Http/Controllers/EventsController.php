@@ -27,6 +27,7 @@ class EventsController extends Controller{
 			$service = new EventsService();
 			
 			$status = $service->createEvent($event);
+			//adding a comment
 			
 			if($status){
 				MyLogger::info("Exiting EventsController.createEvent with passed");
