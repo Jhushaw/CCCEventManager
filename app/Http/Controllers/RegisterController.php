@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Http\BusinessService\CredentialsService;
 use App\Http\Model\User;
+use App\Http\BusinessService\EventsService;
 
 class RegisterController extends Controller{
 	/**
@@ -36,7 +37,20 @@ class RegisterController extends Controller{
 			if($status){
 				MyLogger::info("Exiting RegisterController.userRegister with passed");
 				$data = ['model' => $user];
-				return view('showEvents')->with($data);
+				$eventService = new EventsService();
+				// status should hold all events
+				$eventStatus = $eventService->getAllEvents();
+				
+				if($eventStatus){
+				    MyLogger::info("Exiting LoginController.userLogin with events");
+				    // should be an event in the session variable for event
+				    $data = ['model' => $user, 'events' => $eventStatus];
+				    return view('showEvents')->with($data);
+				}else{
+				    MyLogger::info("Exiting LoginController.userLogin with no events");
+				    $data = ['model' => $user, 'events' => array()];
+				    return view('showEvents')->with($data);
+				}
 				// register passed view does not yet exist
 				// return view('registerPassed')->with($data);
 			}else{
