@@ -31,7 +31,7 @@ Route::get ( '/AddEvent', function () {
 Route::get ( '/EventDetailed', function () {
 	return view ( 'showEventDetailed' );
 } );
-Route::get ( '/EventDetailedOne/{id}', 'EventsController@showEvent' );
+Route::get ( '/EventDetailedOne/{id}', 'EventsController@showEvent' )->name('event.showDetails');
 
 //Route to logout and clear the current user's session
 Route::get('/Logout', 'LoginController@logoutUser');
