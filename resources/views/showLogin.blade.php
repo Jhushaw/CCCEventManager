@@ -37,12 +37,11 @@
 		<p align="center">{{ $message }} </p>
 	@endforeach
 @endif
-<?php
-//checks if message is instantiated, if so echos message
-if (isset($msg)) {
-    echo $msg;
-}
-?></h5>
+
+<h5 align="center"><?php if (isset($msg)){
+    //checks if message is instantiated, if so echos message
+        echo $msg;
+}?></h5>
                 </div>
             </div>
             	<div class="col-lg-6 d-flex align-items-end" id="bg-block" style="background-image: url(&quot;https://miro.medium.com/max/1838/0*Mvw3FI0ozyyanNvE&quot;);background-size: cover;background-position: center center;">

@@ -32,6 +32,7 @@ Route::get ( '/AddEvent', function () {
 Route::get ( '/EventDetailed', function () {
 	return view ( 'showEventDetailed' );
 } );
+Route::get ( '/EventDetailedOne/{id}', 'EventsController@showEvent' );
 
 //Route to logout and clear the current user's session
 Route::get('/Logout', 'LoginController@logoutUser');
@@ -40,3 +41,5 @@ Route::get('/Logout', 'LoginController@logoutUser');
 Route::post('dologin', 'LoginController@userLogin');
 Route::post('doregister', 'RegisterController@userRegister');
 Route::post('doregister', 'RegisterController@userRegister');
+
+Route::post('createEvent', 'EventsController@createEvent');

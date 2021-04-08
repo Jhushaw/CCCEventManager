@@ -29,12 +29,6 @@
 		<p align="center">{{ $message }} </p>
 	@endforeach
 @endif
-<?php
-//checks if message is instantiated, if so echos message
-if (isset($msg)) {
-    echo $msg;
-}
-?></h5>s
             </form>
         </div>
     </div>
