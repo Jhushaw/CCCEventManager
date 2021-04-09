@@ -7,16 +7,54 @@ class Event {
 	private $description;
 	private $date;
 	private $url;	
+    private $capacity;
+    private $currentattendies;
 
-	//constructor method
-	public function __construct($title,$description,$date,$url){
+
+    //constructor method
+	public function __construct($title,$description,$date,$url,$capacity,$currentattendies){
 		$this->title = $title;
 		$this->description= $description;
 		$this->date = $date;
 		$this->url = $url;
+		$this->capacity = $capacity;
+		$this->currentattendies = $currentattendies;
 	}	
 	
 	//getter methods for all user variables
+	
+	
+	/**
+	 * @return mixed
+	 */
+	public function getCapacity()
+	{
+	    return $this->capacity;
+	}
+	
+	/**
+	 * @return mixed
+	 */
+	public function getCurrentattendies()
+	{
+	    return $this->currentattendies;
+	}
+	
+	/**
+	 * @param mixed $capacity
+	 */
+	public function setCapacity($capacity)
+	{
+	    $this->capacity = $capacity;
+	}
+	
+	/**
+	 * @param mixed $currentattendies
+	 */
+	public function setCurrentattendies($currentattendies)
+	{
+	    $this->currentattendies = $currentattendies;
+	}
 	
 	public function getID(){
 	    return $this->id;

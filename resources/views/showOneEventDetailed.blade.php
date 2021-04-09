@@ -52,6 +52,7 @@ body {
                 <div class="col-md-5">
                     <h1><?php echo $ChosenEvent->getTitle();?>&nbsp;<br><?php echo $ChosenEvent->getDate();?></h1>
                     <p><br><br><?php echo $ChosenEvent->getDescription();?>&nbsp;</p>
+                    <p><br><br>Capacity: <?php echo $ChosenEvent->getCapacity();?>&nbsp;</p>
                     <h2 class="text-center text-success"><?php echo $ChosenEvent->getDate();?></h2><button class="btn btn-danger btn-lg center-block" type="button">Attend this Service</button>
                 </div>
             </div>

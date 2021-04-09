@@ -28,17 +28,16 @@
         </div>
       </form>       
     </div> 
-    <div align="center"> 
       <form action="editEvent" method="POST">      
          <input type="hidden" name="_token" value=" <?php echo csrf_token()?>" /><br/>
          <input type="hidden" name="id" value="{{ $event->getID()}}" />
          <div class="form-group"><input class="form-control" type="text" name="url" value="{{ $event->getUrl()}}" placeholder="Image URL"></div>          
          <div class="form-group"><input class="form-control" type="text" name="title" value="{{ $event->getTitle()}}" placeholder="Title"></div>
          <div class="form-group"><input class="form-control" type="date" name="date" value="{{ $event->getDate()}}" placeholder="Date"></div>
+         <div class="form-group"><p>Capacity:</p><input class="form-control" type="number" name="capacity" value="{{ $event->getCapacity()}}" placeholder="0"></div>
          <div class="form-group"><textarea rows="5" cols="50" class="form-control" name="description"  placeholder="Description">{{ $event->getDescription()}}</textarea></div>
       	 <button class="btn btn-info" type="submit">Save Event</button>
       </form>
-    </div>
     </div>
   </div>
 </div>

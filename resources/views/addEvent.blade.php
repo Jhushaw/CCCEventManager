@@ -32,6 +32,7 @@
          <div class="form-group"><input class="form-control" type="text" name="url" placeholder="Image URL"></div>          
          <div class="form-group"><input class="form-control" type="text" name="title" placeholder="Title"></div>
          <div class="form-group"><input class="form-control" type="date" name="date" placeholder="Date"></div>
+         <div class="form-group"><p>Capacity:</p><input class="form-control" type="number" name="capacity" placeholder="0"></div>
          <div class="form-group"><textarea rows="5" cols="50" class="form-control" name="description" placeholder="Description"></textarea></div>
       	 <button class="btn btn-info" type="submit">Save Event</button>
       </form>

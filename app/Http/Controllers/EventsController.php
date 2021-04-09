@@ -18,11 +18,12 @@ class EventsController extends Controller{
 			$title = $request->input("title");
 			$date = $request->input("date");
 			$description = $request->input("description");
+			$capacity = $request->input("capacity");
 			
 			MyLogger::info("Paremeters: with data array" , array("url" => $url, "title" => $title, "date" => $date, "description" => $description));
 			
 			
-			$event = new Event($title, $description, $date, $url);
+			$event = new Event($title, $description, $date, $url, $capacity, null);
 			
 			$service = new EventsService();
 			
@@ -120,8 +121,9 @@ class EventsController extends Controller{
 	        $title = $request->input("title");
 	        $date = $request->input("date");
 	        $description = $request->input("description");
+	        $capacity = $request->input("capacity");
 	        
-	        $event = new Event($title, $description, $date, $url);
+	        $event = new Event($title, $description, $date, $url, $capacity, null);
 	        $event->setID($id);
 	        
 	        MyLogger::info("Exiting EventsController.showEditEvent with failed");
@@ -142,11 +144,11 @@ class EventsController extends Controller{
 	        $title = $request->input("title");
 	        $date = $request->input("date");
 	        $description = $request->input("description");
+	        $capacity = $request->input("capacity");
 	        
 	        MyLogger::info("Paremeters: with data array" , array("url" => $url, "title" => $title, "date" => $date, "description" => $description));
 	        
-	        
-	        $event = new Event($title, $description, $date, $url);
+	        $event = new Event($title, $description, $date, $url, $capacity, null);
 	        $event->setID($id);
 	        $service = new EventsService();
 	        

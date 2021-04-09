@@ -31,12 +31,14 @@ class EventsDAO{
 			$title = $event->getTitle();
 			$date = $event->getDate();
 			$description = $event->getDescription();
+			$capacity = $event->getCapacity();
 			//create a prepared statment. Pass valus by binding pararmeters one by one
-			$stmt = $this->conn->prepare("INSERT INTO events (ID, URL, TITLE, DATE, DESCRIPTION) VALUES (null,?, ?, ?, ?)");
+			$stmt = $this->conn->prepare("INSERT INTO events (ID, URL, TITLE, DATE, DESCRIPTION, CAPACITY) VALUES (null,?, ?, ?, ?,?)");
 			$stmt->bindParam(1, $url);
 			$stmt->bindParam(2, $title);
 			$stmt->bindParam(3, $date);
 			$stmt->bindParam(4, $description);
+			$stmt->bindParam(5, $capacity);
 			$stmt->execute();
 			
 			//check if changes were made
@@ -73,7 +75,7 @@ class EventsDAO{
 			if ($stmt->rowCount() == 1){
 				MyLogger::info("Exit EventsDAO.findEvent() with true");
 				$row = $stmt->fetch(PDO::FETCH_ASSOC);
-				$fetchedEvent = new Event($row['TITLE'], $row['DESCRIPTION'], $row['DATE'], $row['URL']);
+				$fetchedEvent = new Event($row['TITLE'], $row['DESCRIPTION'], $row['DATE'], $row['URL'], $row['CAPACITY'], null);
 				//put user in session
 				session_start();
 				$_SESSION['Event'] = $fetchedEvent;
@@ -138,18 +140,20 @@ class EventsDAO{
 	    MyLogger::info("Entering updatePlaylist() in the Playlist data service");
 	    try {
 	        // update playlist based on param playlist
-	        $stmt = $this->conn->prepare("UPDATE events SET URL = :url, TITLE = :title, DATE = :date, DESCRIPTION = :description WHERE ID = :id");
+	        $stmt = $this->conn->prepare("UPDATE events SET URL = :url, TITLE = :title, DATE = :date, DESCRIPTION = :description, CAPACITY = :capacity WHERE ID = :id");
 	        $id = $event->getID();
 	        $url = $event->getUrl();
 	        $title = $event->getTitle();
 	        $date = $event->getDate();
 	        $description = $event->getDescription();
+	        $capacity = $event->getCapacity();
 	        
 	        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 	        $stmt->bindParam(':url', $url);
 	        $stmt->bindParam(':title', $title);
 	        $stmt->bindParam(':date', $date);
 	        $stmt->bindParam(':description', $description);
+	        $stmt->bindParam(':capacity', $capacity);
 	        
 	        $stmt->execute();
 	        // check rows affected

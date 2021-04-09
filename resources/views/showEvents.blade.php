@@ -39,6 +39,7 @@
 			<input type="hidden" name="date" value="{{ $event['DATE'] }}" />
 			<input type="hidden" name="title" value="{{ $event['TITLE'] }}" />
 			<input type="hidden" name="description" value="{{ $event['DESCRIPTION'] }}" />
+			<input type="hidden" name="capacity" value="{{ $event['CAPACITY'] }}" />
 			<button class="btn btn-info" type="submit">Edit Event</button>
 		</form>
          @endif
