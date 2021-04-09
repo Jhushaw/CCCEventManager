@@ -25,7 +25,6 @@
           <div class="date-pos bg-info-gradiant p-2 d-inline-block text-center rounded text-white position-absolute">{{ date("M", $timestamp) }}<span class="d-block">{{ date("d", $timestamp) }}</span></div>
           <h5 class="font-weight-medium mt-3"><a href="#" class="text-decoration-none link">{{ $event['TITLE'] }}</a></h5>
           
-          <a href="#" class="text-decoration-none linking text-themecolor mt-2">Learn More</a>
          @if (Session::get('Admin') == 1)
          <form action="deleteEvent" method="POST">
 			<input type="hidden" name="_token" value=" <?php echo csrf_token()?>" />
