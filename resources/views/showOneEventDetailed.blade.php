@@ -38,7 +38,7 @@ body {
             <div class="row">
                 <div class="col-md-7">
                     <div class="row">
-                        <div class="col-md-12"><img class="img-thumbnail img-fluid center-block" src="https://image.shutterstock.com/z/stock-photo-silhouette-of-christian-cross-with-years-at-sunset-background-1814216381.jpg"></div>
+                        <div class="col-md-12"><img class="img-thumbnail img-fluid center-block" src="{{ $ChosenEvent->getUrl() }}"></div>
                     </div>
                     <div class="row">
                         <div class="col-6 col-sm-6 col-md-6"></div>
