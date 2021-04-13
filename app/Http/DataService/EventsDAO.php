@@ -4,7 +4,7 @@ namespace App\Http\DataService;
 use App\Http\Model\Event;
 use App\Http\Utillity\DatabaseException;
 use App\Http\Utillity\MyLogger;
-use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Session;
 use PDO;
 use PDOException;
 
@@ -57,6 +57,41 @@ class EventsDAO{
 	}
 	
 	/**
+	 * 
+	 * @param int $userID
+	 * @param int $eventID
+	 * @param int $attendents
+	 * @throws DatabaseException
+	 * @return boolean
+	 */
+	public function attendEvent($eventID, $attendents){
+		MyLogger::info("Entering EventsDAO.attendEvent()");
+		//$userID = Session::get('User')->getId();
+		
+		try{
+ 			//create a prepared statment. Pass valus by binding pararmeters one by one
+			$stmt = $this->conn->prepare("INSERT INTO attendies (users_ID, events_ID, MEMEBERS) VALUES (?, ?, ?)");
+			$stmt->bindParam(1, Session::get('User')->getId());
+			$stmt->bindParam(2, $eventID);
+			$stmt->bindParam(3, $attendents);
+			$stmt->execute();
+			
+			//check if changes were made
+			if ($stmt->rowCount() == 1){
+				MyLogger::info("Exit EventsDAO.attendEvent() with true");
+				return true;
+			}else{
+				MyLogger::info("Exit EventsDAO.attendEvent() with false");
+				return false;
+			}
+		}catch (PDOException $e){
+			//log exception and throw a custom exception
+			MyLogger::error("Exception: ", array("message" => $e->getMessage()));
+			throw new DatabaseException("Database Exception " . $e->getMessage(), 0, $e);
+		}
+	}
+	
+	/**
 	 * finds users in database and returns true if found
 	 * @param Event $event
 	 * @throws DatabaseException
@@ -80,6 +115,7 @@ class EventsDAO{
 				session_start();
 				$_SESSION['Event'] = $fetchedEvent;
 				// Session::put('Event', $fetchedEvent);
+				
 				return $fetchedEvent;
 			}else{
 				MyLogger::info("Exit EventsDAO.findEvent() with false");

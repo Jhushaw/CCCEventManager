@@ -53,7 +53,18 @@ body {
                     <h1><?php echo $ChosenEvent->getTitle();?>&nbsp;<br><?php echo $ChosenEvent->getDate();?></h1>
                     <p><br><br><?php echo $ChosenEvent->getDescription();?>&nbsp;</p>
                     <p><br><br>Capacity: <?php echo $ChosenEvent->getCapacity();?>&nbsp;</p>
-                    <h2 class="text-center text-success"><?php echo $ChosenEvent->getDate();?></h2><button class="btn btn-danger btn-lg center-block" type="button">Attend this Service</button>
+                    <h2 class="text-center text-success"><?php echo $ChosenEvent->getDate();?></h2>
+                    
+                    <form action="attendEvent" method="post">
+                    	<input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
+                    	<input type="hidden" name="eventID" value="<?php echo $ChosenEvent->getID()?>"/> 	
+                        <div class="form-group">
+                        	<label class="text-secondary">Number of attendents:</label>
+                        	<input class="form" min="1" max="8" name="attendents" type="number" style="max-width:55px;"/>
+                        </div>
+                    	<button class="btn btn-danger btn-lg center-block" type="submit">Attend this event</button>                   
+                    </form>
+                    
                 </div>
             </div>
         </div>

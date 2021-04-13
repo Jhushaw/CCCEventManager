@@ -36,14 +36,14 @@ Route::get ( '/EventDetailedOne/{id}', 'EventsController@showEvent' )->name('eve
 //Route to logout and clear the current user's session
 Route::get('/Logout', 'LoginController@logoutUser');
 
-Route::post('deleteEvent', 'EventsController@deleteEvent');
-
-Route::post('showEditEvent', 'EventsController@showEditEvent');
-
-Route::post('editEvent', 'EventsController@editEvent');
 //post route
+Route::post('deleteEvent', 'EventsController@deleteEvent');
+Route::post('showEditEvent', 'EventsController@showEditEvent');
+Route::post('editEvent', 'EventsController@editEvent');
+
 Route::post('dologin', 'LoginController@userLogin');
-Route::post('doregister', 'RegisterController@userRegister');
 Route::post('doregister', 'RegisterController@userRegister');
 
 Route::post('createEvent', 'EventsController@createEvent');
+Route::post('attendEvent', 'EventsController@attendEvent');
+

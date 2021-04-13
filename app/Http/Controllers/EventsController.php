@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Utillity\MyLogger;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Exception;
 use App\Http\Model\Event;
@@ -50,7 +51,7 @@ class EventsController extends Controller{
 			
 			$service = new EventsService();
 			$status = $service->findEvent($id);
-			
+			$status->setID($id);
 			if($status){
 				MyLogger::info("Exiting LoginController.userLogin with passed");
 				// should be an event in the session variable for event
@@ -165,4 +166,30 @@ class EventsController extends Controller{
 	        throw $e1;
 	    }
 	}
+	
+	public function attendEvent(Request $request){
+		MyLogger::info("Entering EventsController.attendEvent()");
+		
+		try{
+			$eventID = $request->input("eventID");
+			$attendents = $request->input("attendents");
+
+			//MyLogger::info("Paremeters: with data array" , array("EventId: " => $eventID, "#ofAttendents: " => $attendents));
+			
+			$service = new EventsService();
+			$status = $service->attendEvent($eventID, $attendents);
+			
+			if($status){
+				MyLogger::info("Exiting EventsController.attendEvent with success");
+				return showAllEvents();
+			}else{
+				MyLogger::info("Exiting EventsController.attendEvent with failed");
+				return view('error')->with('msg', 'Failed to attend an Event');
+			}
+		}catch(ValidationException $e1){
+			throw $e1;
+		}
+	}
+	
+	
 }
