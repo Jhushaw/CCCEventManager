@@ -44,7 +44,7 @@ class LoginController extends Controller{
 				}
 			}else{
 				MyLogger::info("Exiting LoginController.userLogin with failed");
-				return view('loginFailed');
+				return view('showLogin')->with('msg', "Failed to Login, Invalid Username or Password");
 			}
 		}catch(ValidationException $e1){
 			throw $e1;
