@@ -45,5 +45,5 @@ Route::post('dologin', 'LoginController@userLogin');
 Route::post('doregister', 'RegisterController@userRegister');
 
 Route::post('createEvent', 'EventsController@createEvent');
-Route::post('attendEvent', 'EventsController@attendEvent');
+Route::post('/attendEvent', 'EventsController@attendEvent')->name('event.attend');
 

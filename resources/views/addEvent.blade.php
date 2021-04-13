@@ -26,7 +26,12 @@
 <!--           <a href="#" class="text-decoration-none linking text-themecolor mt-2">Learn More</a> -->
         </div>
       </form>       
-    </div>  
+    </div>
+    <h5 align="center"><?php if (isset($msg)){
+        //checks if message is instantiated, if so echos message
+        echo $msg;
+        }?></h5>  
+        
       <form action="createEvent" method="POST">      
          <input type="hidden" name="_token" value=" <?php echo csrf_token()?>" /><br/>
          <div class="form-group"><input class="form-control" type="text" name="url" placeholder="Image URL"></div>          
@@ -36,7 +41,12 @@
          <div class="form-group"><textarea rows="5" cols="50" class="form-control" name="description" placeholder="Description"></textarea></div>
       	 <button class="btn btn-info" type="submit">Save Event</button>
       </form>
-      
+      @if($errors->count() != 0)
+	<h5 align="center">List of Errors</h5>
+	@foreach($errors->all() as $message)
+		<p align="center">{{ $message }} </p><br>
+	@endforeach
+@endif
     </div>
   </div>
 </div>
