@@ -56,6 +56,7 @@ body {
                 </div>
                 <div class="col-md-5">
 <<<<<<< HEAD
+<<<<<<< HEAD
                 <!--{{ $timestamp = strtotime( $ChosenEvent->getDate() ) }}  -->
                     <h1><?php echo $ChosenEvent->getTitle();?>&nbsp;<br><br>Date: <?php echo date("M d, Y",$timestamp)?></h1>
                     <p><br><?php echo $ChosenEvent->getDescription();?>&nbsp;</p>
@@ -72,6 +73,11 @@ body {
 	@endforeach
 @endif
                     <br>
+                    <h1><?php echo $ChosenEvent->getTitle();?>&nbsp;<br><?php echo $ChosenEvent->getDate();?></h1>
+                    <p><br><br><?php echo $ChosenEvent->getDescription();?>&nbsp;</p>
+                    <p><br><br>Capacity: <?php echo $ChosenEvent->getCapacity();?>&nbsp;</p>
+                    <h2 class="text-center text-success"><?php echo $ChosenEvent->getDate();?></h2>
+                    
                     <form action="{{route('event.attend')}}" method="post">
                     	<input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
                     	<input type="hidden" name="eventID" value="<?php echo $ChosenEvent->getID()?>"/> 	
