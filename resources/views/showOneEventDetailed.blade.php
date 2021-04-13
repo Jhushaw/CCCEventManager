@@ -55,7 +55,7 @@ body {
                     <p><br><br>Capacity: <?php echo $ChosenEvent->getCapacity();?>&nbsp;</p>
                     <h2 class="text-center text-success"><?php echo $ChosenEvent->getDate();?></h2>
                     
-                    <form action="attendEvent" method="post">
+                    <form action="{{route('event.attend')}}" method="post">
                     	<input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
                     	<input type="hidden" name="eventID" value="<?php echo $ChosenEvent->getID()?>"/> 	
                         <div class="form-group">

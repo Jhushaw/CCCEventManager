@@ -66,29 +66,42 @@ class EventsDAO{
 	 */
 	public function attendEvent($eventID, $attendents){
 		MyLogger::info("Entering EventsDAO.attendEvent()");
-		//$userID = Session::get('User')->getId();
+		$userID = Session::get('User')->getUserId();
 		
 		try{
- 			//create a prepared statment. Pass valus by binding pararmeters one by one
-			$stmt = $this->conn->prepare("INSERT INTO attendies (users_ID, events_ID, MEMEBERS) VALUES (?, ?, ?)");
-			$stmt->bindParam(1, Session::get('User')->getId());
-			$stmt->bindParam(2, $eventID);
-			$stmt->bindParam(3, $attendents);
-			$stmt->execute();
+			//check if duplicate process first
+			$duplicate = $this->conn->prepare("SELECT * FROM attendies WHERE users_ID = :userId AND events_ID = :eventId LIMIT 1");
+			$duplicate->bindParam(':userId', $userID);
+			$duplicate->bindParam(':eventId', $eventID);			
+			$duplicate->execute();
 			
-			//check if changes were made
-			if ($stmt->rowCount() == 1){
-				MyLogger::info("Exit EventsDAO.attendEvent() with true");
-				return true;
-			}else{
-				MyLogger::info("Exit EventsDAO.attendEvent() with false");
+			//See if user already attended event else move
+			if ($duplicate->rowCount() == 1){
+				MyLogger::info("Exit EventsDAO.attendEvent() with false. Duplicate attend signup!");				
 				return false;
+			}else{
+	 			//create a prepared statment. Pass valus by binding pararmeters one by one
+				$stmt = $this->conn->prepare("INSERT INTO attendies (users_ID, events_ID, MEMBERS) VALUES (?, ?, ?)");
+				$stmt->bindParam(1, $userID);
+				$stmt->bindParam(2, $eventID);
+				$stmt->bindParam(3, $attendents);
+				$stmt->execute();
+				
+				//check if changes were made
+				if ($stmt->rowCount() == 1){
+					MyLogger::info("Exit EventsDAO.attendEvent() with true");
+					return true;
+				}else{
+					MyLogger::info("Exit EventsDAO.attendEvent() with false");
+					return false;
+				}
 			}
 		}catch (PDOException $e){
 			//log exception and throw a custom exception
 			MyLogger::error("Exception: ", array("message" => $e->getMessage()));
 			throw new DatabaseException("Database Exception " . $e->getMessage(), 0, $e);
 		}
+				
 	}
 	
 	/**

@@ -181,7 +181,7 @@ class EventsController extends Controller{
 			
 			if($status){
 				MyLogger::info("Exiting EventsController.attendEvent with success");
-				return showAllEvents();
+				return $this->showAllEvents();
 			}else{
 				MyLogger::info("Exiting EventsController.attendEvent with failed");
 				return view('error')->with('msg', 'Failed to attend an Event');
