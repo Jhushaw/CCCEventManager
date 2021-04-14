@@ -60,9 +60,9 @@ body {
                 <div class="col-md-5">
                 <!--{{ $timestamp = strtotime( $ChosenEvent->getDate() ) }}  -->
                     <h1><?php echo $ChosenEvent->getTitle();?>&nbsp;<br><br>Date: <?php echo date("M d, Y",$timestamp)?></h1>
-                    <p><br><?php echo $ChosenEvent->getDescription();?>&nbsp;</p>
+                    <p><br>Description: <?php echo $ChosenEvent->getDescription();?>&nbsp;</p>
                     <p><br>Capacity: <?php echo $ChosenEvent->getCapacity();?>&nbsp;</p>
-                    <p><br><br>Remaining Capacity: <?php echo $ChosenEvent->getCapacity() - $ChosenEvent->getCurrentAttendies();?>
+                    <p><br>Remaining Capacity: <?php echo $ChosenEvent->getCapacity() - $ChosenEvent->getCurrentAttendies();?>
 
                     <h5 align="center"><?php if (isset($msg)){
                     //checks if message is instantiated, if so echos message
