@@ -59,12 +59,14 @@ body {
                     <h1><?php echo $ChosenEvent->getTitle();?>&nbsp;<br><br>Date: <?php echo date("M d, Y",$timestamp)?></h1>
                     <p><br><?php echo $ChosenEvent->getDescription();?>&nbsp;</p>
                     <p><br>Capacity: <?php echo $ChosenEvent->getCapacity();?>&nbsp;</p>
+                    <p><br><br>Remaining Capacity: <?php echo $ChosenEvent->getCapacity() - $ChosenEvent->getCurrentAttendies();?>
 
                     <h5 align="center"><?php if (isset($msg)){
                     //checks if message is instantiated, if so echos message
                     echo $msg;
                     }?></h5>
                      <div class="attend">
+
                     <form action="{{route('event.attend')}}" method="post">
                     	<input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
                     	<input type="hidden" name="eventID" value="<?php echo $ChosenEvent->getID()?>"/> 	
