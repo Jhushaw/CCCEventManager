@@ -3,6 +3,9 @@
 @section('head','Calendar')
 
 @section('content')
+@if (!Session::has('User')) 
+    <script>window.location = "Login";</script>
+@endif
 <!-- action will point to the route -->   
 <div class="bootstrap_calendar">
 <div class="container py-5">

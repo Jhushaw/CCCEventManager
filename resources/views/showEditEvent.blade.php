@@ -3,6 +3,9 @@
 @section('head','Add Events')
 
 @section('content')
+@if (!Session::has('User')) 
+    <script>window.location = "Login";</script>
+ @endif
 @if (Session::has('User') && Session::get('Admin') == 1)
 <!-- action will point to the route -->   
 <div class="blog-home2 py-5">

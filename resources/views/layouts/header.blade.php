@@ -9,7 +9,7 @@
                 @if (Session::has('User'))   
                     <li class="nav-item"><a class="nav-link" href="/CCCEventManager/Calendar">Calendar</a></li>
                     <li class="nav-item"><a class="nav-link" href="/CCCEventManager/Events">Events</a></li>
-                    @endif       
+                    @endif     
                     @if (Session::has('User') && Session::get('Admin') == 1)
                     <li class="nav-item"><a class="nav-link" href="/CCCEventManager/AddEvent">Add Events</a></li>                                                    
                     <!-- <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Events</a>
