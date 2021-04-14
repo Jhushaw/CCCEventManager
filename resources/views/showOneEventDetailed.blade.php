@@ -62,24 +62,33 @@ body {
                     <h1><?php echo $ChosenEvent->getTitle();?>&nbsp;<br><br>Date: <?php echo date("M d, Y",$timestamp)?></h1>
                     <p><br>Description: <?php echo $ChosenEvent->getDescription();?>&nbsp;</p>
                     <p><br>Capacity: <?php echo $ChosenEvent->getCapacity();?>&nbsp;</p>
-                    <p><br>Remaining Capacity: <?php echo $ChosenEvent->getCapacity() - $ChosenEvent->getCurrentAttendies();?>
-
+					<p><br>Remaining Capacity: <?php echo $ChosenEvent->getCapacity() - $ChosenEvent->getCurrentAttendies();?>
                     <h5 align="center"><?php if (isset($msg)){
                     //checks if message is instantiated, if so echos message
                     echo $msg;
                     }?></h5>
                     					@if(!$attending)
-                     <div class="attend">
-                    <form action="{{route('event.attend')}}" method="post">
-                    	<input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
-                    	<input type="hidden" name="eventID" value="<?php echo $ChosenEvent->getID()?>"/> 	
-                        <div class="form-group">
-                        	<label class="text-secondary">Number of attendents:</label>
-                        	<input class="form" min="1" max="8" name="attendents" type="number" style="max-width:55px;"/>
-                        </div>
-                    	<button class="btn btn-danger btn-lg center-block" type="submit">Attend this event</button>                   
-                    </form>
-                                 </div>
+                    <div class="attend">
+	                    <form action="{{route('event.attend')}}" method="post">
+	                    	<input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
+	                    	<input type="hidden" name="eventID" value="<?php echo $ChosenEvent->getID()?>"/> 	
+	                        <div class="form-group">
+	                        	<label class="text-secondary">Number of attendents:</label>
+	                        	<input class="form" min="1" max="8" name="attendents" type="number" style="max-width:55px;"/>
+	                        </div>
+	                    	<button class="btn btn-danger btn-lg center-block" type="submit">Attend this event</button>                   
+	                    </form>
+                    </div>
+                    @endif
+                                        @if($attending)
+                    <div class="Unattend">
+	                    <form action="{{route('event.unattend')}}" method="post">
+	                    	<input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
+	                    	<input type="hidden" name="eventID" value="<?php echo $ChosenEvent->getID()?>"/> 
+	                   		<input type="hidden" name="currentAttendies" value="<?php echo $ChosenEvent->getCurrentAttendies()?>"/>	
+	                    	<button class="btn btn-danger btn-lg center-block" type="submit">Unattend this event</button>                   
+	                    </form>
+                    </div>
                     @endif
                                         @if($errors->count() != 0)
 	<h5 align="center">List of Errors</h5>

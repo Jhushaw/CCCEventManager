@@ -24,6 +24,7 @@ Route::get ( '/Calendar', function () {
 	return view ( 'showCalendar' );
 } );
 Route::get ( '/Events', 'EventsController@showAllEvents' );
+Route::get ( '/EventsAttending', 'EventsController@eventsAttending' );
 
 Route::get ( '/AddEvent', function () {
 	return view ( 'addEvent' );
@@ -46,4 +47,5 @@ Route::post('doregister', 'RegisterController@userRegister');
 
 Route::post('createEvent', 'EventsController@createEvent');
 Route::post('/attendEvent', 'EventsController@attendEvent')->name('event.attend');
+Route::post('/unattendEvent', 'EventsController@unattendEvent')->name('event.unattend');
 

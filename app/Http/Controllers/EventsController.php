@@ -193,6 +193,51 @@ class EventsController extends Controller{
 		}
 	}
 	
+	public function unattendEvent(Request $request){
+		MyLogger::info("Entering EventsController.unattendEvent()");
+		
+		try{
+			$eventID = $request->input("eventID");
+			$currentAttendies = $request->input("currentAttendies");
+			//MyLogger::info("Paremeters: with data array" , array("EventId: " => $eventID));
+			
+			$service = new EventsService();
+			$status = $service->unattendEvent($eventID, $currentAttendies);
+			
+			if($status){
+				MyLogger::info("Exiting EventsController.unattendEvent with success");
+				return $this->eventsAttending();
+			}else{
+				MyLogger::info("Exiting EventsController.unattendEvent with failed");
+				return view('error')->with('msg', 'You can not unattend this event');
+			}
+		}catch(ValidationException $e1){
+			throw $e1;
+		}
+	}
+	
+	public function eventsAttending() {
+		try{
+			$service = new EventsService();
+			//status should hold all attending events
+			$status = $service->eventsAttending();
+			
+			if($status){
+				MyLogger::info("Exiting EventsController.eventsAttending with passed");
+				// should be an event in the session variable for event
+				return view('showEvents')->with('events', $status);
+			}else{
+				MyLogger::info("Exiting EventsController.eventsAttending with failed");
+				return view('showEvents')->with('events', array());
+			}
+		}catch(ValidationException $e1){
+			throw $e1;
+		}catch(Exception $e){
+			MyLogger::info("Exceptions", array("Message" =>$e->getMessage()));
+			throw $e;
+		}
+	}
+	
 	private function validateForm(Request $request){
 	    $rules = ['url' => 'Required',
 	        'title' => 'Required',

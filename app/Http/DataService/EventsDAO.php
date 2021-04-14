@@ -132,6 +132,54 @@ class EventsDAO
             throw new DatabaseException("Database Exception " . $e->getMessage(), 0, $e);
         }
     }
+    
+    public function unattendEvent($eventID, $currentAttendies){
+    	MyLogger::info("Entering EventsDAO.attendEvent()");
+    	$userID = Session::get('User')->getUserId();
+    	
+    	try {
+	    	// Check to see if there's enough room for the amount of people specified
+	    	$members = $this->conn->prepare("SELECT MEMBERS FROM attendies WHERE events_ID = :eventId LIMIT 1");
+	    	$members->bindParam(':eventId', $eventID);
+	    	$members->execute();
+	    	$memberCount = $members->fetch(PDO::FETCH_ASSOC);
+	    	if ($members->rowCount() == 1){   		
+	    		// Updated attendies is to be used a little further on to update the event itself in the database, to increase it's current attendies column.
+	    		//$updatedAttendies = intVal($row['CURRENTATTENDIES']) + $attendents;
+	    		$updatedAttendies = intVal($memberCount['MEMBERS'] - $currentAttendies);
+	    		// create a prepared statment. Pass valus by binding pararmeters one by one
+	    		$stmt = $this->conn->prepare("DELETE FROM attendies WHERE users_ID = :userId AND events_ID = :eventId LIMIT 1");
+	    		$stmt->bindParam(':userId', $userID);
+	    		$stmt->bindParam(':eventId', $eventID);
+	    		$stmt->execute();
+	    				
+	    		// check if changes were made
+	    		if ($stmt->rowCount() == 1) {			
+	    			// Updates the event row with an updated current attendies column
+	    			$updateEvent = $this->conn->prepare("UPDATE events SET CURRENTATTENDIES = :updatedAttendies WHERE ID = :eventID");
+	    			$updateEvent->bindParam(':updatedAttendies', $updatedAttendies);
+	    			$updateEvent->bindParam(':eventID', $eventID);
+	    			$updateEvent->execute();
+	    			if ($updateEvent->rowCount() == 1) {
+	    				MyLogger::info("Exit EventsDAO.attendEvent() with true");
+	    				return true;
+	    			} else {
+	    				MyLogger::info("Update event failed");
+	    				return false;
+	    			}
+	    		} else {
+	    			MyLogger::info("Exit EventsDAO.attendEvent() with false");
+	    			return false;
+	    		}
+	    	}
+    	} catch (PDOException $e) {
+    		// log exception and throw a custom exception
+    		MyLogger::error("Exception: ", array(
+    				"message" => $e->getMessage()
+    		));
+    		throw new DatabaseException("Database Exception " . $e->getMessage(), 0, $e);
+    	}
+    }
 
     /**
      * finds users in database and returns true if found
@@ -280,8 +328,40 @@ class EventsDAO
             MyLogger::error("Exception: ", array(
                 "message" => $e->getMessage()));
 	        throw new DatabaseException("Database Exception " . $e->getMessage(), 0, $e);
-	    }
-	    
+	    }	    
+	}
+	
+	/**
+	 *
+	 * @throws DatabaseException
+	 * @return boolean
+	 */
+	public function eventsAttending(){
+		MyLogger::info("Entering EventsDAO.eventsAttending()");
+		$userID = Session::get('User')->getUserId();
+		
+		try{
+			// only select events the current logged in user is attending
+			$stmt = $this->conn->prepare("SELECT * FROM events INNER JOIN attendies ON events.ID = attendies.events_ID AND attendies.users_ID='$userID'");
+			$stmt->execute();
+			
+			//See if events returned and return true if found else return false if not found
+			if ($stmt->rowCount() > 0){
+				MyLogger::info("Exit EventsDAO.eventsAttending() with events found");
+				// get all events as associative arrays
+				$events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+				return $events;
+			}else{
+				MyLogger::info("Exit EventsDAO.eventsAttending() with false");
+				return false;
+			}
+		}catch (PDOException $e){
+			//BEST practice: catch all exceptions (do not swallow exceptions),
+			//log the exception, do not throw technology specific exceptions, and throw a cusom exception
+			MyLogger::error("Exception: ", array("message" => $e->getMessage()));
+			throw new DatabaseException("Database Exception " . $e->getMessage(), 0, $e);
+		}
 	}
 	
 }
