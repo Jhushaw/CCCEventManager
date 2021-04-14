@@ -32,8 +32,6 @@
         //checks if message is instantiated, if so echos message
         echo $msg;
         }?></h5> 
-        @if($errors->count() != 0)
-	
       <form action="editEvent" method="POST">      
          <input type="hidden" name="_token" value=" <?php echo csrf_token()?>" /><br/>
          <input type="hidden" name="id" value="{{ $event->getID()}}" />
@@ -44,6 +42,7 @@
          <div class="form-group"><textarea rows="5" cols="50" class="form-control" name="description"  placeholder="Description">{{ $event->getDescription()}}</textarea></div>
       	 <button class="btn btn-info" type="submit">Save Event</button>
       </form>
+              @if($errors->count() != 0)
       <h5 align="center">List of Errors</h5>
 	@foreach($errors->all() as $message)
 		<p align="center">{{ $message }} </p><br>

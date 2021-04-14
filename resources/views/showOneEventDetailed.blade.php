@@ -55,29 +55,16 @@ body {
                     </div>
                 </div>
                 <div class="col-md-5">
-<<<<<<< HEAD
-<<<<<<< HEAD
                 <!--{{ $timestamp = strtotime( $ChosenEvent->getDate() ) }}  -->
                     <h1><?php echo $ChosenEvent->getTitle();?>&nbsp;<br><br>Date: <?php echo date("M d, Y",$timestamp)?></h1>
                     <p><br><?php echo $ChosenEvent->getDescription();?>&nbsp;</p>
                     <p><br>Capacity: <?php echo $ChosenEvent->getCapacity();?>&nbsp;</p>
-                    <div class="attend">
+
                     <h5 align="center"><?php if (isset($msg)){
                     //checks if message is instantiated, if so echos message
                     echo $msg;
                     }?></h5>
-                    @if($errors->count() != 0)
-	<h5 align="center">List of Errors</h5>
-	@foreach($errors->all() as $message)
-		<p align="center">{{ $message }} </p>
-	@endforeach
-@endif
-                    <br>
-                    <h1><?php echo $ChosenEvent->getTitle();?>&nbsp;<br><?php echo $ChosenEvent->getDate();?></h1>
-                    <p><br><br><?php echo $ChosenEvent->getDescription();?>&nbsp;</p>
-                    <p><br><br>Capacity: <?php echo $ChosenEvent->getCapacity();?>&nbsp;</p>
-                    <h2 class="text-center text-success"><?php echo $ChosenEvent->getDate();?></h2>
-                    
+                     <div class="attend">
                     <form action="{{route('event.attend')}}" method="post">
                     	<input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
                     	<input type="hidden" name="eventID" value="<?php echo $ChosenEvent->getID()?>"/> 	
@@ -87,6 +74,12 @@ body {
                         </div>
                     	<button class="btn btn-danger btn-lg center-block" type="submit">Attend this event</button>                   
                     </form>
+                                        @if($errors->count() != 0)
+	<h5 align="center">List of Errors</h5>
+	@foreach($errors->all() as $message)
+		<p align="center">{{ $message }} </p>
+	@endforeach
+@endif
                     </div>
                 </div>
             </div>
