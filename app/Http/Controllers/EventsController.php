@@ -52,10 +52,11 @@ class EventsController extends Controller{
 			$service = new EventsService();
 			$status = $service->findEvent($id);
 			$status->setID($id);
+			$attending = $service->findAttend($id);
 			if($status){
 				MyLogger::info("Exiting LoginController.userLogin with passed");
 				// should be an event in the session variable for event
-				return view('showOneEventDetailed')->with('ChosenEvent', $status);
+				return view('showOneEventDetailed')->with('ChosenEvent', $status)->with('attending',$attending);
 			}else{
 				MyLogger::info("Exiting LoginController.userLogin with failed");
 				return view('showEvents');
@@ -185,7 +186,7 @@ class EventsController extends Controller{
 				return $this->showAllEvents();
 			}else{
 				MyLogger::info("Exiting EventsController.attendEvent with failed");
-				return view('error')->with('msg', 'Failed to attend an Event');
+				return view('error')->with('msg', 'You already attend this event');
 			}
 		}catch(ValidationException $e1){
 			throw $e1;

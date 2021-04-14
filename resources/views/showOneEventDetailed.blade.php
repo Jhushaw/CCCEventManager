@@ -65,8 +65,8 @@ body {
                     //checks if message is instantiated, if so echos message
                     echo $msg;
                     }?></h5>
+                    					@if(!$attending)
                      <div class="attend">
-
                     <form action="{{route('event.attend')}}" method="post">
                     	<input type="hidden" name="_token" value="<?php echo csrf_token()?>"/>
                     	<input type="hidden" name="eventID" value="<?php echo $ChosenEvent->getID()?>"/> 	
@@ -76,13 +76,14 @@ body {
                         </div>
                     	<button class="btn btn-danger btn-lg center-block" type="submit">Attend this event</button>                   
                     </form>
+                                 </div>
+                    @endif
                                         @if($errors->count() != 0)
 	<h5 align="center">List of Errors</h5>
 	@foreach($errors->all() as $message)
 		<p align="center">{{ $message }} </p>
 	@endforeach
 @endif
-                    </div>
                 </div>
             </div>
         </div>

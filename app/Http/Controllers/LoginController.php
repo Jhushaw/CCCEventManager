@@ -61,8 +61,8 @@ class LoginController extends Controller{
 	}
 	
 	private function validateForm(Request $request){
-		$rules = ['username' => 'Required | Between:2,12',
-				'password' => 'Required | Between:5,15'];
+		$rules = ['username' => 'Required',
+				'password' => 'Required'];
 		
 		//run data validation rules
 		$this->validate($request, $rules);
