@@ -80,6 +80,15 @@ class EventsDAO{
 				MyLogger::info("Exit EventsDAO.attendEvent() with false. Duplicate attend signup!");				
 				return false;
 			}else{
+			    //Check to see if there's enough room for the amount of people specified
+			    $validateRoom = $this->conn->prepare("SELECT CAPACITY, CURRENTATTENDIES FROM events WHERE ID = :eventID");
+			    $validateRoom->bindParam(':eventID', $eventID);
+			    $validateRoom->execute();
+			    $row = $validateRoom->fetch(PDO::FETCH_ASSOC);
+			    if ((int)$row['CAPACITY'] - (int)$row['CURRENTATTENDIES'] - $attendents < 0)
+			        return false;
+			    //Updated attendies is to be used a little further on to update the event itself in the database, to increase it's current attendies column.
+			    $updatedAttendies = intVal($row['CURRENTATTENDIES']) + $attendents;
 	 			//create a prepared statment. Pass valus by binding pararmeters one by one
 				$stmt = $this->conn->prepare("INSERT INTO attendies (users_ID, events_ID, MEMBERS) VALUES (?, ?, ?)");
 				$stmt->bindParam(1, $userID);
@@ -89,8 +98,22 @@ class EventsDAO{
 				
 				//check if changes were made
 				if ($stmt->rowCount() == 1){
-					MyLogger::info("Exit EventsDAO.attendEvent() with true");
-					return true;
+
+					//Updates the event row with an updated current attendies column, as there are more people attending now
+					$updateEvent = $this->conn->prepare("UPDATE events SET CURRENTATTENDIES = :updatedAttendies WHERE ID = :eventID");
+					$updateEvent->bindParam(':updatedAttendies', $updatedAttendies);
+					$updateEvent->bindParam(':eventID', $eventID);
+					$updateEvent->execute();
+					if ($updateEvent->rowCount() == 1)
+					{
+					    MyLogger::info("Exit EventsDAO.attendEvent() with true");
+					    return true;
+					}
+					else 
+					{
+					    MyLogger::info("Update event failed");
+					    return false;
+					}
 				}else{
 					MyLogger::info("Exit EventsDAO.attendEvent() with false");
 					return false;
@@ -123,7 +146,7 @@ class EventsDAO{
 			if ($stmt->rowCount() == 1){
 				MyLogger::info("Exit EventsDAO.findEvent() with true");
 				$row = $stmt->fetch(PDO::FETCH_ASSOC);
-				$fetchedEvent = new Event($row['TITLE'], $row['DESCRIPTION'], $row['DATE'], $row['URL'], $row['CAPACITY'], null);
+				$fetchedEvent = new Event($row['TITLE'], $row['DESCRIPTION'], $row['DATE'], $row['URL'], $row['CAPACITY'], $row['CURRENTATTENDIES']);
 				//put user in session
 				session_start();
 				$_SESSION['Event'] = $fetchedEvent;

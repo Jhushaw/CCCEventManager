@@ -53,6 +53,7 @@ body {
                     <h1><?php echo $ChosenEvent->getTitle();?>&nbsp;<br><?php echo $ChosenEvent->getDate();?></h1>
                     <p><br><br><?php echo $ChosenEvent->getDescription();?>&nbsp;</p>
                     <p><br><br>Capacity: <?php echo $ChosenEvent->getCapacity();?>&nbsp;</p>
+                    <p><br><br>Remaining Capacity: <?php echo $ChosenEvent->getCapacity() - $ChosenEvent->getCurrentAttendies();?>
                     <h2 class="text-center text-success"><?php echo $ChosenEvent->getDate();?></h2>
                     
                     <form action="{{route('event.attend')}}" method="post">
