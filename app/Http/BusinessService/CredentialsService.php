@@ -21,6 +21,7 @@ class CredentialsService{
 		$password = config("database.connections.mysql.password");
 		$dbname = config("database.connections.mysql.database");
 
+		
 		//Create Connection
 		$db = new PDO("mysql:host=$servername;port=$port;dbname=$dbname", $username, $password);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
