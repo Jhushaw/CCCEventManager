@@ -14,7 +14,7 @@ class EventsController extends Controller{
 		MyLogger::info("Entering EventsController.createEvent()");
 		
 		try{
-			// $this->validateForm($request);
+			$this->validateForm($request);
 			$url = $request->input("url");
 			$title = $request->input("title");
 			$date = $request->input("date");
@@ -139,7 +139,7 @@ class EventsController extends Controller{
 	    MyLogger::info("Entering EventsController.editEvent()");
 	    
 	    try{
-	        // $this->validateForm($request);
+	        $this->validateForm($request);
 	        $id = $request->input("id");
 	        $url = $request->input("url");
 	        $title = $request->input("title");
@@ -171,6 +171,7 @@ class EventsController extends Controller{
 		MyLogger::info("Entering EventsController.attendEvent()");
 		
 		try{
+		    $this->validateAttendForm($request);
 			$eventID = $request->input("eventID");
 			$attendents = $request->input("attendents");
 
@@ -191,5 +192,23 @@ class EventsController extends Controller{
 		}
 	}
 	
+	private function validateForm(Request $request){
+	    $rules = ['url' => 'Required',
+	        'title' => 'Required',
+	        'date' => 'Required',
+	        'description' => 'Required',
+	        'capacity' => 'Required'];
+	    
+	    //run data validation rules
+	    $this->validate($request, $rules);
+	}
+	
+	private function validateAttendForm(Request $request){
+	    $rules = ['attendents' => 'Required'];
+	    
+	    //run data validation rules
+	    $this->validate($request, $rules);
+	}
+
 	
 }

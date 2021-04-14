@@ -20,10 +20,10 @@
     @foreach ($events as $event)
       <div class="col-md-4 on-hover">
         <div class="card border-0 mb-4">
-          <a href="#"><img class="card-img-top" src="{{ $event['URL'] }}" alt="{{ $event['URL']}}"></a>
+          <a href="{{ route('event.showDetails',['id'=> $event['ID']]) }}"><img class="card-img-top" src="{{ $event['URL'] }}" alt="{{ $event['URL']}}"></a>
           <!--{{ $timestamp = strtotime( $event['DATE'] ) }}  -->
           <div class="date-pos bg-info-gradiant p-2 d-inline-block text-center rounded text-white position-absolute">{{ date("M", $timestamp) }}<span class="d-block">{{ date("d", $timestamp) }}</span></div>
-          <h5 class="font-weight-medium mt-3"><a href="#" class="text-decoration-none link">{{ $event['TITLE'] }}</a></h5>
+          <h5 class="font-weight-medium mt-3"><a href="{{ route('event.showDetails',['id'=> $event['ID']]) }}" class="text-decoration-none link">{{ $event['TITLE'] }}</a></h5>
           
          @if (Session::get('Admin') == 1)
          <form action="deleteEvent" method="POST">
