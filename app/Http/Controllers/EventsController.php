@@ -181,12 +181,19 @@ class EventsController extends Controller{
 			$service = new EventsService();
 			$status = $service->attendEvent($eventID, $attendents);
 			
-			if($status){
-				MyLogger::info("Exiting EventsController.attendEvent with success");
+			if($status == 0){
+				MyLogger::info("Exiting EventsController.attendEvent with success.");
 				return $this->showAllEvents();
-			}else{
+			}else if ($status == 1){
 				MyLogger::info("Exiting EventsController.attendEvent with failed");
-				return view('error')->with('msg', 'You already attend this event');
+				return view('error')->with('msg', 'Database failed to sign you up for an event');
+			}
+			else if ($status == 2){
+			    MyLogger::info("Exiting EventsController.attendEvent with failed");
+			    return view('error')->with('msg', 'You are already signed up for this event.');
+			}else if ($status == 3){
+			    MyLogger::info("Exiting EventsController.attendEvent with failed");
+			    return view('error')->with('msg', 'This even is already at full capacity or you entered more attendents than available capacity.');
 			}
 		}catch(ValidationException $e1){
 			throw $e1;

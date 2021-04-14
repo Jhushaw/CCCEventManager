@@ -86,7 +86,7 @@ class EventsDAO
             // See if user already attended event else move
             if ($duplicate->rowCount() == 1) {
                 MyLogger::info("Exit EventsDAO.attendEvent() with false. Duplicate attend signup!");
-                return false;
+                return 2;
             } else {
                 // Check to see if there's enough room for the amount of people specified
                 $validateRoom = $this->conn->prepare("SELECT CAPACITY, CURRENTATTENDIES FROM events WHERE ID = :eventID");
@@ -94,7 +94,7 @@ class EventsDAO
                 $validateRoom->execute();
                 $row = $validateRoom->fetch(PDO::FETCH_ASSOC);
                 if ((int) $row['CAPACITY'] - (int) $row['CURRENTATTENDIES'] - $attendents < 0)
-                    return false;
+                    return 3;
                 // Updated attendies is to be used a little further on to update the event itself in the database, to increase it's current attendies column.
                 $updatedAttendies = intVal($row['CURRENTATTENDIES']) + $attendents;
                 // create a prepared statment. Pass valus by binding pararmeters one by one
@@ -114,14 +114,14 @@ class EventsDAO
                     $updateEvent->execute();
                     if ($updateEvent->rowCount() == 1) {
                         MyLogger::info("Exit EventsDAO.attendEvent() with true");
-                        return true;
+                        return 0;
                     } else {
                         MyLogger::info("Update event failed");
-                        return false;
+                        return 1;
                     }
                 } else {
                     MyLogger::info("Exit EventsDAO.attendEvent() with false");
-                    return false;
+                    return 1;
                 }
             }
         } catch (PDOException $e) {
